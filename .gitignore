@@ -1,0 +1,13 @@
+# Build files and directories
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Compiled binaries and object files
+RetroKanto
+
+# Misc
+.DS_Store
+.vscode
+
