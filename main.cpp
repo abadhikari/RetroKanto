@@ -1,31 +1,48 @@
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include "shader/ShaderProgram.h"
+#include "window/Window.h"
+#include "mesh/Mesh.h"
 
 int main() {
-  if(!glfwInit()) {
-    std::cerr << "Failed to initialize GLFW" << std::endl;
+  // Create the window
+  Window window(800, 600, "RetroKanto");
+  if (!window.init()) {
     return -1;
   }
 
-  GLFWwindow* window = glfwCreateWindow(800, 600, "RetroKanto", nullptr, nullptr);
-  if (!window) {
-    std::cerr << "Failed to create GLFW window" << std::endl;
-    glfwTerminate();
+  // Set up shaders
+  ShaderProgram basicShaderProgram("shader/vertex_shader.glsl", "shader/fragment_shader.glsl");
+  if (!basicShaderProgram.init()) {
     return -1;
   }
 
-  glfwMakeContextCurrent(window); 
+  // Triangle vertices to be rendered to screen
+  float vertices[] = {
+    0.0f,  0.5f, 0.0f,
+   -0.5f, -0.5f, 0.0f,
+    0.5f, -0.5f, 0.0f
+  };
 
-  // Set the clear color to sky blue
-  glClearColor(0.5f, 0.8f, 1.0f, 1.0f);
+  Mesh triangle(vertices, sizeof(vertices));
 
-  while (!glfwWindowShouldClose(window)) {
+  while (!window.shouldClose()) {
+    // Clear the screen, preparing it for new frame rendering
     glClear(GL_COLOR_BUFFER_BIT);
-    glfwSwapBuffers(window);
-    glfwPollEvents();
+
+    // Apply the shaders from basicShaderProgram when rendering objects to the screen
+    basicShaderProgram.useProgram();
+
+    // Render to the screen
+    triangle.draw();
+
+    // Swap the front and back buffers, displaying the newly rendered frame
+    window.swapBuffers();
+
+    // Process any pending events, such as keyboard and mouse input
+    window.pollEvents();
   }
 
-  glfwDestroyWindow(window);
-  glfwTerminate();
   return 0;
 }
