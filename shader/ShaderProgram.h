@@ -8,6 +8,7 @@
 
 #include <string>
 #include <GL/glew.h>
+#include <glm/gtc/matrix_transform.hpp>
 
 /**
  * @class ShaderProgram
@@ -51,7 +52,9 @@ public:
    * After calling this method, the shader program will be used for rendering until another program is activated or
    * unbound.
    */
-  void useProgram();
+  void use();
+
+  void setUniform(const std::string& name, const glm::mat4& vector);
 
 private:
   /**

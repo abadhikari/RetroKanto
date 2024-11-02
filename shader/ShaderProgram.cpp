@@ -56,24 +56,29 @@ std::string ShaderProgram::loadShaderSource(const std::string& filepath) {
   return shaderStream.str();
 }
 
-void ShaderProgram::useProgram() {
+void ShaderProgram::use() {
   glUseProgram(programId);
 }
 
 GLuint ShaderProgram::compileShader(unsigned int type, const char* source) {
-    GLuint id = glCreateShader(type);
-    glShaderSource(id, 1, &source, nullptr);
-    glCompileShader(id);
+  GLuint id = glCreateShader(type);
+  glShaderSource(id, 1, &source, nullptr);
+  glCompileShader(id);
 
-    int success;
-    glGetShaderiv(id, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        char infoLog[512];
-        glGetShaderInfoLog(id, 512, nullptr, infoLog);
-        std::cerr << "Shader compilation error:\n" << infoLog << std::endl;
-    }
+  int success;
+  glGetShaderiv(id, GL_COMPILE_STATUS, &success);
+  if (!success) {
+      char infoLog[512];
+      glGetShaderInfoLog(id, 512, nullptr, infoLog);
+      std::cerr << "Shader compilation error:\n" << infoLog << std::endl;
+  }
 
-    return id;
+  return id;
+}
+
+void ShaderProgram::setUniform(const std::string& name, const glm::mat4& matrix) {
+  GLuint matrixId = glGetUniformLocation(programId, name.c_str());
+  glUniformMatrix4fv(matrixId, 1, GL_FALSE, &matrix[0][0]);
 }
 
 ShaderProgram::~ShaderProgram() {

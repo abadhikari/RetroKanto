@@ -56,6 +56,16 @@ public:
    */
   void pollEvents();
 
+  /**
+   * @brief Get the window width.
+   */
+  int getWidth();
+
+  /**
+   * @brief Get the window height.
+   */
+  int getHeight();
+
 private:
   /** 
    * Width of the window in pixels.

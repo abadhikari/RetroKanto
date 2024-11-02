@@ -5,7 +5,7 @@ project(RetroKanto)
 set(CMAKE_CXX_STANDARD 17)
 
 # Add executable
-add_executable(RetroKanto main.cpp Camera.cpp shader/ShaderProgram.cpp window/Window.cpp mesh/Mesh.cpp)
+add_executable(RetroKanto main.cpp camera/Camera.cpp shader/ShaderProgram.cpp window/Window.cpp mesh/Mesh.cpp renderer/Renderer.cpp)
 
 # Include GLFW and GLM
 find_package(glfw3 3.3 REQUIRED)

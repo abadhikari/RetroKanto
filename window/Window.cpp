@@ -46,8 +46,16 @@ void Window::swapBuffers() {
   glfwSwapBuffers(window);
 }
 
-void Window::pollEvents(){
+void Window::pollEvents() {
   glfwPollEvents();
+}
+
+int Window::getWidth() {
+  return width;
+}
+
+int Window::getHeight() {
+  return height;
 }
 
 Window::~Window() {
