@@ -44,7 +44,38 @@ public:
    */
   glm::mat4 getViewMatrix() const;
 
+  /**
+   * @brief Moves the camera backward along its view direction.
+   * @param deltaTime The time elapsed since the last frame, used to calculate consistent movement speed.
+   */
+  void moveBackward(double deltaTime);
+
+  /**
+   * @brief Moves the camera forward along its view direction.
+   * @param deltaTime The time elapsed since the last frame, used to calculate consistent movement speed.
+   */
+  void moveForward(double deltaTime);
+
+  /**
+   * @brief Moves the camera to the left, perpendicular to its view direction.
+   * @param deltaTime The time elapsed since the last frame, used to calculate consistent movement speed.
+   */
+  void moveLeft(double deltaTime);
+
+  /**
+   * @brief Moves the camera to the right, perpendicular to its view direction.
+   * @param deltaTime The time elapsed since the last frame, used to calculate consistent movement speed.
+   */
+  void moveRight(double deltaTime);
+
 private:
+  /**
+   * @brief Updates the target point the camera is looking at based on its position and view direction.
+   *
+   * Ensures the target point remains aligned with the camera's orientation.
+   */
+  void updateTarget();
+
   /**
    * Represents the perspective transformation.
    */
@@ -65,6 +96,41 @@ private:
    * (0,1,0) is normal, while (0,-1,0) is to look upside-down.
    */
   glm::vec3 up;
+
+  /**
+   * The horizontal angle of the camera's orientation, measured in radians.
+   */
+  GLfloat horizontalAngle;
+
+  /**
+   * The vertical angle of the camera's orientation, measured in radians.
+   */
+  GLfloat verticalAngle;
+
+  /**
+   * The initial field of view (FOV) of the camera in degrees.
+   */
+  GLfloat initialFov;
+
+  /**
+   * The speed at which the camera moves through the world.
+   */
+  GLfloat cameraSpeed;
+
+  /**
+   * The speed at which the camera responds to mouse movements.
+   */
+  GLfloat mouseSpeed;
+
+  /**
+   * The direction the camera is currently facing.
+   */
+  glm::vec3 viewDirection;
+
+  /**
+   * The vector pointing to the right of the camera, perpendicular to the view direction.
+   */
+  glm::vec3 sideVector;
 };
 
 #endif

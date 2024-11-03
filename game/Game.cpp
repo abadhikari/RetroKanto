@@ -151,6 +151,24 @@ void Game::update(double startTime) {
   }
 }
 
+void Game::handleInput() {
+  if (glfwGetKey( window -> getWindow(), GLFW_KEY_DOWN ) == GLFW_PRESS){
+    camera -> moveBackward(deltaTime);
+  }
+
+  if (glfwGetKey( window -> getWindow(), GLFW_KEY_UP ) == GLFW_PRESS){
+    camera -> moveForward(deltaTime);
+  }
+
+  if (glfwGetKey( window -> getWindow(), GLFW_KEY_RIGHT ) == GLFW_PRESS){
+    camera -> moveRight(deltaTime);
+  }
+
+  if (glfwGetKey( window -> getWindow(), GLFW_KEY_LEFT ) == GLFW_PRESS){
+    camera -> moveLeft(deltaTime);
+  }
+}
+
 void Game::render() {
   glm::mat4 modelMatrix = glm::mat4(1.0f);
 
@@ -168,6 +186,8 @@ int Game::run() {
 
   while (!window -> shouldClose()) {
     double startTime = glfwGetTime();
+
+    handleInput();
 
     render();
 

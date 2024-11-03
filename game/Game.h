@@ -40,6 +40,8 @@ public:
    */
   int run();
 
+  void handleInput();
+
 private:
   /**
    * @brief Updates game state, including time management and FPS control.
