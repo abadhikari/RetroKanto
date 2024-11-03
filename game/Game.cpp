@@ -15,7 +15,6 @@ Game::Game(int width, int height, std::string title)
   : width(width),
     height(height),
     title(title),
-    lastTime(glfwGetTime()),
     targetFps(61.0),
     targetFrameTime(1.0 / targetFps),
     fpsCounter(0),
@@ -45,6 +44,9 @@ bool Game::initialize() {
 
   // Cull triangles which normal is not towards the camera
   glEnable(GL_CULL_FACE);
+
+  // Hide cursor
+  glfwSetInputMode(window->getWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
   // Cube vertices to be rendered to screen
   const GLfloat vertices[] = {
@@ -127,6 +129,8 @@ bool Game::initialize() {
 
   cube = new Mesh(vertices, colors, sizeof(vertices));
 
+  lastTime = glfwGetTime();
+
   return true;
 }
 
@@ -152,21 +156,40 @@ void Game::update(double startTime) {
 }
 
 void Game::handleInput() {
-  if (glfwGetKey( window -> getWindow(), GLFW_KEY_DOWN ) == GLFW_PRESS){
-    camera -> moveBackward(deltaTime);
-  }
-
-  if (glfwGetKey( window -> getWindow(), GLFW_KEY_UP ) == GLFW_PRESS){
+  // Handle movement
+  if (glfwGetKey( window -> getWindow(), GLFW_KEY_W ) == GLFW_PRESS){
     camera -> moveForward(deltaTime);
   }
 
-  if (glfwGetKey( window -> getWindow(), GLFW_KEY_RIGHT ) == GLFW_PRESS){
+  if (glfwGetKey( window -> getWindow(), GLFW_KEY_S ) == GLFW_PRESS){
+    camera -> moveBackward(deltaTime);
+  }
+
+  if (glfwGetKey( window -> getWindow(), GLFW_KEY_D ) == GLFW_PRESS){
     camera -> moveRight(deltaTime);
   }
 
-  if (glfwGetKey( window -> getWindow(), GLFW_KEY_LEFT ) == GLFW_PRESS){
+  if (glfwGetKey( window -> getWindow(), GLFW_KEY_A ) == GLFW_PRESS){
     camera -> moveLeft(deltaTime);
   }
+
+  handleMouseMovement();
+
+  // End game if esc is pressed
+  if (glfwGetKey(window->getWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+    glfwSetWindowShouldClose(window->getWindow(), true);
+  }
+}
+
+void Game::handleMouseMovement() {
+  double xPosition, yPosition;
+  glfwGetCursorPos(window -> getWindow(), &xPosition, &yPosition);
+
+  int screenWidth, screenHeight;
+  glfwGetWindowSize(window -> getWindow(), &screenWidth, &screenHeight);
+  glfwSetCursorPos(window -> getWindow(), screenWidth / 2, screenHeight / 2);
+
+  camera -> updateOrientation(deltaTime, xPosition, yPosition, screenWidth, screenHeight);
 }
 
 void Game::render() {

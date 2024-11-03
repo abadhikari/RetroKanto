@@ -68,6 +68,20 @@ public:
    */
   void moveRight(double deltaTime);
 
+  /**
+   * @brief Updates the camera's orientation based on mouse movement.
+   *
+   * This function adjusts the camera's horizontal and vertical angles according to the mouse's position
+   * on the screen, which affects the camera's view direction and creates a first-person camera effect.
+   *
+   * @param deltaTime Time elapsed since the last frame, used to scale the orientation change for smooth movement.
+   * @param xPosition Current x-coordinate of the mouse cursor within the window.
+   * @param yPosition Current y-coordinate of the mouse cursor within the window.
+   * @param screenWidth Width of the window, used to calculate the mouse offset.
+   * @param screenHeight Height of the window, used to calculate the mouse offset.
+   */
+  void updateOrientation(double deltaTime, double xPosition, double yPosition, int screenWidth, int screenHeight);
+
 private:
   /**
    * @brief Updates the target point the camera is looking at based on its position and view direction.

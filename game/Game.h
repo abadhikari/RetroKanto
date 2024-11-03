@@ -40,8 +40,6 @@ public:
    */
   int run();
 
-  void handleInput();
-
 private:
   /**
    * @brief Updates game state, including time management and FPS control.
@@ -59,6 +57,16 @@ private:
    * @return Returns true if initialization was successful; false otherwise.
    */
   bool initialize();
+
+  /**
+   * @brief Handles input from user.
+   */
+  void handleInput();
+
+  /**
+   * @brief Handles mouse movement from user.
+   */
+  void handleMouseMovement();
 
   /**
    * Pointer to the window object managing the display.

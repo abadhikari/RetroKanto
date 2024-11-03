@@ -13,7 +13,7 @@ Camera::Camera(GLfloat fov, GLfloat aspectRatio, GLfloat nearClip, GLfloat farCl
     verticalAngle(0.0f),
     initialFov(fov),
     cameraSpeed(3.0f),
-    mouseSpeed(0.005f) {
+    mouseSpeed(0.05f) {
   
   viewDirection = glm::vec3 (
       cos(verticalAngle) * sin(horizontalAngle),
@@ -37,9 +37,9 @@ glm::mat4 Camera::getProjectionMatrix() const {
 
 glm::mat4 Camera::getViewMatrix() const {
   return glm::lookAt(
-    glm::vec3(position),
-    glm::vec3(target),
-    glm::vec3(up)
+    position,
+    target,
+    up
   );
 }
 
@@ -65,4 +65,23 @@ void Camera::moveRight(double deltaTime) {
 
 void Camera::updateTarget() {
   target = position + viewDirection;
+}
+
+void Camera::updateOrientation(double deltaTime, double xPosition, double yPosition, int screenWidth, int screenHeight) {
+  horizontalAngle += mouseSpeed * deltaTime * float(screenWidth / 2 - xPosition);
+  verticalAngle   += mouseSpeed * deltaTime * float(screenHeight / 2 - yPosition);
+
+  viewDirection = glm::vec3(
+    cos(verticalAngle) * sin(horizontalAngle),
+    sin(verticalAngle),
+    cos(verticalAngle) * cos(horizontalAngle)
+  );
+
+  sideVector = glm::vec3(
+    sin(horizontalAngle - 3.14f/2.0f),
+    0,
+    cos(horizontalAngle - 3.14f/2.0f)
+  );
+
+  updateTarget();
 }
