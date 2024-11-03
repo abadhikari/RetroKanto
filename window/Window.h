@@ -59,12 +59,17 @@ public:
   /**
    * @brief Get the window width.
    */
-  int getWidth();
+  int getWidth() const;
 
   /**
    * @brief Get the window height.
    */
-  int getHeight();
+  int getHeight() const;
+
+  /**
+   * @brief Get the OpenGL window.
+   */
+  GLFWwindow* getWindow() const;
 
 private:
   /** 

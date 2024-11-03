@@ -50,12 +50,16 @@ void Window::pollEvents() {
   glfwPollEvents();
 }
 
-int Window::getWidth() {
+int Window::getWidth() const {
   return width;
 }
 
-int Window::getHeight() {
+int Window::getHeight() const {
   return height;
+}
+
+GLFWwindow* Window::getWindow() const {
+  return window;
 }
 
 Window::~Window() {

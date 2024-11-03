@@ -6,7 +6,9 @@
 #include "Camera.h"
 
 Camera::Camera(GLfloat fov, GLfloat aspectRatio, GLfloat nearClip, GLfloat farClip)
-  : position(glm::vec3(4,3,3)), target(glm::vec3(0,0,0)), up(glm::vec3(0,1,0)) {
+  : position(glm::vec3(4,3,3)),
+    target(glm::vec3(0,0,0)),
+    up(glm::vec3(0,1,0)) {
   projectionMatrix = glm::perspective(glm::radians(fov), aspectRatio, nearClip, farClip);
 }
 
